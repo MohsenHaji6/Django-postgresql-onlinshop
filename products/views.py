@@ -16,7 +16,9 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
        context = super().get_context_data(**kwargs)
+    #    product = self.get_object()
        context['comment_form'] = CommentForm() 
+    #    context['comments_active_manager'] = Comment.comments_active_manager.filter(product=product)
        return context
 
 class CommentCreateView(CreateView):
