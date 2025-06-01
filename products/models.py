@@ -5,13 +5,17 @@ from django.utils.translation import gettext_lazy as _
 
 class Product(models.Model):
 
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-    price = models.PositiveIntegerField(default=0)
-    active = models.BooleanField(default=True)
+    title = models.CharField(max_length=100, verbose_name=_('title'))
+    description = models.TextField(verbose_name=_('description'))
+    price = models.PositiveIntegerField(default=0, verbose_name=_('price'))
+    active = models.BooleanField(default=True, verbose_name=_('active'))
 
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
 
     def __str__(self):
         return self.title
@@ -32,10 +36,12 @@ class Comment(models.Model):
         ('5', _('very good')),
     ]
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='comments')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments',
+                                verbose_name=_('product'))
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
+                                related_name='comments', verbose_name=_('author'))
     body = models.TextField(verbose_name=_('Comment'))
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=True, verbose_name=_('actives'))
     star = models.CharField(max_length=10, choices=PRODUCT_STAR, verbose_name=_('Enter your score'))
 
     datetime_created = models.DateTimeField(auto_now_add=True)
@@ -44,6 +50,10 @@ class Comment(models.Model):
     # Manager
     objects = models.Manager()
     comments_active_manager = CommentsActiveManager()
+
+    class Meta:
+        verbose_name = _('Comment')
+        verbose_name_plural = _('Comments')
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[self.product.id])

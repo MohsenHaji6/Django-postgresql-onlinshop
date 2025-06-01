@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
 import os
 
 from environs import Env
@@ -48,13 +49,14 @@ INSTALLED_APPS = [
     #local
     'accounts',
     'pages',
-    'products',
+    'products.apps.ProductsConfig',
 
     #third party
     'crispy_forms',
     'crispy_bootstrap5',
     'allauth',
     'allauth.account',
+    'rosetta'
     
 ]
 
@@ -140,6 +142,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'fa'
+LANGUAGES = (
+    ('en', 'English'),
+    ('fa', 'Persian'),
+)
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Tehran'
@@ -187,3 +193,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 # crispy form
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+# for messages framework
+MESSAGE_TAGS = {
+    messages.ERROR : 'danger',
+}

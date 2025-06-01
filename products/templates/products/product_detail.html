@@ -3,6 +3,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% load comment_tags %}
+{% load bootstrap_tags %}
 {% load i18n %}
 
 {% block page_title %}
@@ -22,6 +23,17 @@ Product
 
 <!-- Main Wrapper Start -->
 <div class="wrapper">
+    <div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div class="container">
+                <li{% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
     <!-- Breadcrumb area Start -->
     <div class="breadcrumb-area bg-color ptb--90" data-bg-color="#f6f6f6">
         <div class="container">
